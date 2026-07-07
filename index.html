@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar Coordinates Kinematics Calculator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #1e293b;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h2 { color: #f43f5e; margin-top: 0; }
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        input {
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #f43f5e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover { background-color: #e11d48; }
+        .results {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #334155;
+        }
+        .result-item {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        .value { font-weight: bold; color: #38bdf8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Polar Kinematics Solver</h2>
+    <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem;">
+        Computes instantaneous Radial ($a_r$) and Transverse ($a_\theta$) acceleration components.
+    </p>
+
+    <div class="input-group">
+        <label>Radius position, $r$ (m)</label>
+        <input type="number" id="r" value="5" step="any">
+    </div>
+    <div class="input-group">
+        <label>Radial velocity, $\dot{r}$ (m/s)</label>
+        <input type="number" id="rdot" value="2" step="any">
+    </div>
+    <div class="input-group">
+        <label>Radial acceleration, $\ddot{r}$ (m/s²)</label>
+        <input type="number" id="rddot" value="0.5" step="any">
+    </div>
+    <div class="input-group">
+        <label>Angular velocity, $\omega$ or $\dot{\theta}$ (rad/s)</label>
+        <input type="number" id="omega" value="3" step="any">
+    </div>
+    <div class="input-group">
+        <label>Angular acceleration, $\alpha$ or $\ddot{\theta}$ (rad/s²)</label>
+        <input type="number" id="alpha" value="1.5" step="any">
+    </div>
+
+    <button onclick="calculateKinematics()">Calculate Acceleration</button>
+
+    <div class="results">
+        <div class="result-item">Radial Accel ($a_r$): <span id="ar-out" class="value">-</span> m/s²</div>
+        <div class="result-item">Transverse Accel ($a_\theta$): <span id="atheta-out" class="value">-</span> m/s²</div>
+    </div>
+</div>
+
+<script>
+function calculateKinematics() {
+    // 1. Grab values from the inputs
+    const r = parseFloat(document.getElementById('r').value);
+    const rdot = parseFloat(document.getElementById('rdot').value);
+    const rddot = parseFloat(document.getElementById('rddot').value);
+    const omega = parseFloat(document.getElementById('omega').value);
+    const alpha = parseFloat(document.getElementById('alpha').value);
+
+    // 2. Apply the kinematic equations derived by SymPy
+    // a_r = rddot - r * (omega^2)
+    const ar = rddot - (r * Math.pow(omega, 2));
+    
+    // a_theta = r * alpha + 2 * rdot * omega
+    const atheta = (r * alpha) + (2 * rdot * omega);
+
+    // 3. Output results rounded to 3 decimal places
+    document.getElementById('ar-out').textContent = ar.toFixed(3);
+    document.getElementById('atheta-out').textContent = atheta.toFixed(3);
+}
+
+// Run once on load
+calculateKinematics();
+</script>
+
+</body>
+</html>
