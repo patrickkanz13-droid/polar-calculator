@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polar Coordinates Kinematics Calculator</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/solid.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -74,23 +86,23 @@
 
     <div class="input-group">
         <label>Radius position, $r$ (m)</label>
-        <input type="number" id="r" value="5" step="any">
+        <input type="number" id="r" value="5" step="any" oninput="calculateKinematics()">
     </div>
     <div class="input-group">
         <label>Radial velocity, $\dot{r}$ (m/s)</label>
-        <input type="number" id="rdot" value="2" step="any">
+        <input type="number" id="rdot" value="2" step="any" oninput="calculateKinematics()">
     </div>
     <div class="input-group">
         <label>Radial acceleration, $\ddot{r}$ (m/s²)</label>
-        <input type="number" id="rddot" value="0.5" step="any">
+        <input type="number" id="rddot" value="0.5" step="any" oninput="calculateKinematics()">
     </div>
     <div class="input-group">
         <label>Angular velocity, $\omega$ or $\dot{\theta}$ (rad/s)</label>
-        <input type="number" id="omega" value="3" step="any">
+        <input type="number" id="omega" value="3" step="any" oninput="calculateKinematics()">
     </div>
     <div class="input-group">
         <label>Angular acceleration, $\alpha$ or $\ddot{\theta}$ (rad/s²)</label>
-        <input type="number" id="alpha" value="1.5" step="any">
+        <input type="number" id="alpha" value="1.5" step="any" oninput="calculateKinematics()">
     </div>
 
     <button onclick="calculateKinematics()">Calculate Acceleration</button>
@@ -103,28 +115,24 @@
 
 <script>
 function calculateKinematics() {
-    // 1. Grab values from the inputs
-    const r = parseFloat(document.getElementById('r').value);
-    const rdot = parseFloat(document.getElementById('rdot').value);
-    const rddot = parseFloat(document.getElementById('rddot').value);
-    const omega = parseFloat(document.getElementById('omega').value);
-    const alpha = parseFloat(document.getElementById('alpha').value);
+    const r = parseFloat(document.getElementById('r').value) || 0;
+    const rdot = parseFloat(document.getElementById('rdot').value) || 0;
+    const rddot = parseFloat(document.getElementById('rddot').value) || 0;
+    const omega = parseFloat(document.getElementById('omega').value) || 0;
+    const alpha = parseFloat(document.getElementById('alpha').value) || 0;
 
-    // 2. Apply the kinematic equations derived by SymPy
-    // a_r = rddot - r * (omega^2)
     const ar = rddot - (r * Math.pow(omega, 2));
-    
-    // a_theta = r * alpha + 2 * rdot * omega
     const atheta = (r * alpha) + (2 * rdot * omega);
 
-    // 3. Output results rounded to 3 decimal places
     document.getElementById('ar-out').textContent = ar.toFixed(3);
     document.getElementById('atheta-out').textContent = atheta.toFixed(3);
 }
 
-// Run once on load
+// Initial computation
 calculateKinematics();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/tex-chtml.js"></script>
 
 </body>
 </html>
