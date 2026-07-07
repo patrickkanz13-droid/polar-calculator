@@ -1,19 +1,20 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polar Coordinates Kinematics Calculator</title>
     
+    <!-- MathJax Configuration and Script -->
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$']],
-                displayMath: [['$$', '$$']]
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
             }
         };
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://jsdelivr.net"></script>
 
     <style>
         body {
@@ -33,56 +34,15 @@
             width: 100%;
         }
         h2 { color: #f43f5e; margin-top: 0; }
-        .input-group {
-            margin-bottom: 1.25rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-        input {
-            width: 100%;
-            padding: 0.6rem;
-            border-radius: 6px;
-            border: 1px solid #334155;
-            background-color: #0f172a;
-            color: #fff;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #f43f5e;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
+        .input-group { margin-bottom: 1.25rem; }
+        label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: #94a3b8; }
+        input { width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid #334155; background-color: #0f172a; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 0.75rem; background-color: #f43f5e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-bottom: 1rem; }
         button:hover { background-color: #e11d48; }
-        .results {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #334155;
-        }
-        .result-item {
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
-        }
+        .results { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #334155; }
+        .result-item { margin-bottom: 0.75rem; font-size: 1.05rem; }
         .value { font-weight: bold; color: #38bdf8; }
     </style>
-    <script>
-      window.MathJax = {
-        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-      };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-      src="https://jsdelivr.net">
-    </script>
 </head>
 <body>
 
@@ -129,7 +89,6 @@ function calculateKinematics() {
     const omega = parseFloat(document.getElementById('omega').value) || 0;
     const alpha = parseFloat(document.getElementById('alpha').value) || 0;
 
-    // Formula execution
     const ar = rddot - (r * Math.pow(omega, 2));
     const atheta = (r * alpha) + (2 * rdot * omega);
 
@@ -137,7 +96,6 @@ function calculateKinematics() {
     document.getElementById('atheta-out').textContent = atheta.toFixed(3);
 }
 
-// Run initially to show defaults
 window.addEventListener('DOMContentLoaded', () => {
     calculateKinematics();
 });
@@ -145,4 +103,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
-         
