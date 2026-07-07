@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polar Coordinates Kinematics Calculator</title>
     
-    <!-- MathJax Configuration and Script -->
+    <!-- Bulletproof MathJax Setup -->
     <script>
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax initial typesetting complete');
+                    });
+                }
             }
         };
     </script>
@@ -94,6 +101,11 @@ function calculateKinematics() {
 
     document.getElementById('ar-out').textContent = ar.toFixed(3);
     document.getElementById('atheta-out').textContent = atheta.toFixed(3);
+    
+    // Force MathJax to re-scan the page if updates occur dynamically
+    if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+    }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
