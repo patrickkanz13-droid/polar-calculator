@@ -1,12 +1,10 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polar Coordinates Kinematics Calculator</title>
     
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/solid.js"></script>
     <script>
         window.MathJax = {
             tex: {
@@ -15,6 +13,7 @@
             }
         };
     </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/tex-mml-chtml.js"></script>
 
     <style>
         body {
@@ -62,6 +61,7 @@
             font-weight: bold;
             cursor: pointer;
             font-size: 1rem;
+            margin-bottom: 1rem;
         }
         button:hover { background-color: #e11d48; }
         .results {
@@ -70,7 +70,7 @@
             border-top: 1px solid #334155;
         }
         .result-item {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             font-size: 1.05rem;
         }
         .value { font-weight: bold; color: #38bdf8; }
@@ -108,8 +108,8 @@
     <button onclick="calculateKinematics()">Calculate Acceleration</button>
 
     <div class="results">
-        <div class="result-item">Radial Accel ($a_r$): <span id="ar-out" class="value">-</span> m/s²</div>
-        <div class="result-item">Transverse Accel ($a_\theta$): <span id="atheta-out" class="value">-</span> m/s²</div>
+        <div class="result-item">Radial Accel ($a_r = \ddot{r} - r\dot{\theta}^2$): <span id="ar-out" class="value">-</span> m/s²</div>
+        <div class="result-item">Transverse Accel ($a_\theta = r\ddot{\theta} + 2\dot{r}\dot{\theta}$): <span id="atheta-out" class="value">-</span> m/s²</div>
     </div>
 </div>
 
@@ -121,6 +121,7 @@ function calculateKinematics() {
     const omega = parseFloat(document.getElementById('omega').value) || 0;
     const alpha = parseFloat(document.getElementById('alpha').value) || 0;
 
+    // Formula execution
     const ar = rddot - (r * Math.pow(omega, 2));
     const atheta = (r * alpha) + (2 * rdot * omega);
 
@@ -128,11 +129,12 @@ function calculateKinematics() {
     document.getElementById('atheta-out').textContent = atheta.toFixed(3);
 }
 
-// Initial computation
-calculateKinematics();
+// Run initially to show defaults
+window.addEventListener('DOMContentLoaded', () => {
+    calculateKinematics();
+});
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/tex-chtml.js"></script>
 
 </body>
 </html>
+         
