@@ -5,23 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polar Coordinates Kinematics Calculator</title>
     
-    <!-- Bulletproof MathJax Setup -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            },
-            startup: {
-                pageReady: () => {
-                    return MathJax.startup.defaultPageReady().then(() => {
-                        console.log('MathJax initial typesetting complete');
-                    });
-                }
-            }
-        };
+    <!-- Load KaTeX styles and scripts from CDN -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    <script defer src="https://jsdelivr.net"></script>
+    
+    <!-- Load the Auto-Render extension to automatically swap $ signs for textbook math -->
+    <script defer src="https://jsdelivr.net"></script>
+    <script defer src="https://jsdelivr.net"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError : false
+        });">
     </script>
-    <script id="MathJax-script" async src="https://jsdelivr.net"></script>
 
     <style>
         body {
@@ -101,10 +99,16 @@ function calculateKinematics() {
 
     document.getElementById('ar-out').textContent = ar.toFixed(3);
     document.getElementById('atheta-out').textContent = atheta.toFixed(3);
-    
-    // Force MathJax to re-scan the page if updates occur dynamically
-    if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise();
+
+    // Tell KaTeX to refresh the typesetting on dynamic inputs
+    if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError : false
+        });
     }
 }
 
